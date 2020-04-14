@@ -138,7 +138,6 @@ Citizen.CreateThread(function()
 
             if GetScaleformMovieFunctionReturnBool(ClickReturn) then -- old native?
                 ProgramID = GetScaleformMovieFunctionReturnInt(ClickReturn)
-                print("ProgramID: "..ProgramID) -- Prints the ID of the Apps we click on inside the scaleform, very useful.
 
                 if ProgramID == 82 then --HACKCONNECT.EXE
                     PlaySoundFrontend(-1, "HACKING_CLICK_BAD", "", false)

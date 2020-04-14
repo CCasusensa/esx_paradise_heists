@@ -29,7 +29,7 @@ local function drillingFail()
     drillTemp = 0
 end
 
-RegisterNetEvent("ps_startdrilling")
+
 
 Citizen.CreateThread(function ()
 
@@ -127,31 +127,18 @@ Citizen.CreateThread(function ()
 
     function StopParadiseDrilling()
         scaleform = nil
-
         DeleteJackhammer()
-
+        DetachEntity(drillProp, 1, 1)
+        DeleteEntity(drillProp)
         DeleteObject(drillProp)
         SetEntityAsNoLongerNeeded(drillProp)
-
-
         local ped = PlayerPedId()
-
         SetPedCanSwitchWeapon(ped, true)
         FreezeEntityPosition(ped, false)
-
+        ClearPedSecondaryTask(GetPlayerPed(PlayerId()))
         ClearPedTasksImmediately(ped)
-
-        
-
-        -- stop sounds
-        -- unload dicts
+        ClearPedTasks(ped)
     end
-
-
-    
-
-
-
 end)
 
 Citizen.CreateThread(function ()
@@ -415,15 +402,13 @@ Citizen.CreateThread(function ()
     end
 end)
 
-Citizen.CreateThread(function ()
-    AddEventHandler("ps_startdrilling", function (bool)
-        if (bool) then
-            print("Starting drilling!")
-            StartParadiseDrilling()
-        else
-            StopParadiseDrilling()
-        end
-    end)
+RegisterNetEvent("ps_startdrilling")
+AddEventHandler("ps_startdrilling", function (toggle)
+    if (toggle) then
+        StartParadiseDrilling()
+    else
+        StopParadiseDrilling()
+    end
 end)
 
 

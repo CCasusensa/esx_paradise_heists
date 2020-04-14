@@ -1,7 +1,7 @@
 local terminals = Config.Terminals
 local drillpositions = Config.DrillPositions
 local blipRobbery = nil
-
+local showTip = true
 ESX = nil
 
 Citizen.CreateThread(function()
@@ -64,40 +64,56 @@ Citizen.CreateThread(function()
             DisplayHelpText(_U("rob_button"))
             
             if IsControlJustPressed(1, 38) then
-                
-                if IsPedArmed(ped, 4) then
-                    TriggerServerEvent('ps:canHack', id)
-                else
-                    ESX.ShowNotification(_U('no_threat'))
-                end
-            
+                ESX.TriggerServerCallback("esx_paradise:iscollectPossible", function(cooldown)
+                    if not cooldown then
+                        if IsPedArmed(ped, 4) then
+                            TriggerServerEvent('ps:canHack', id)
+                        else
+                            ESX.ShowNotification(_U('no_threat'))
+                        end
+                    end
+                end)
             end
         end
         
         local b, pos, id = nearInteractionEntity(drillpositions, 2)
         if b and terminals[id].inProgress then
-            DisplayHelpText(_U("drill_button"))
+            if showTip then
+                DisplayHelpText(_U("drill_button"))
+            end
             
-            if IsControlJustPressed(1, 38) then
+            if IsControlJustPressed(1, 38) and showTip then
                 -- vrtat
-                FreezeEntityPosition(ped, true)
-                SetEntityCoords(ped, pos.x, pos.y, pos.z, false, false, false)
-                SetEntityHeading(ped, drillpositions[id].heading)
-                
-                TriggerEvent("ps_startdrilling", true, drillpositions[id])
+                ESX.TriggerServerCallback("esx_paradise:iscollectPossible", function(cooldown)
+                    if not cooldown then
+                        FreezeEntityPosition(ped, true)
+                        SetEntityCoords(ped, pos.x, pos.y, pos.z, false, false, false)
+                        SetEntityHeading(ped, drillpositions[id].heading)
+                        TriggerEvent("ps_startdrilling", true, drillpositions[id])
+                        showTip = false
+                    end
+                end)
             end
         end
-    
-    
     end
+end)
+
+RegisterNetEvent('ps:stopprogess')
+AddEventHandler("ps:stopprogess", function()
+    local b, pos, id = nearInteractionEntity(terminals, 15)
+    local b, pos, id2 = nearInteractionEntity(drillpositions, 2)
+    if terminals[id].inProgress then
+        terminals[id].inProgress = false
+    end
+    if terminals[id2].inProgress then
+        terminals[id2].inProgress = false
+    end
+    showTip = true
 end)
 
 RegisterNetEvent('ps:canHackResult')
 RegisterNetEvent("paradise_hack_bruteforce")
 RegisterNetEvent("paradise_hack_bruteforce_result")
-RegisterNetEvent("ps:startTimer")
-RegisterNetEvent("ps:cleanupVault")
-RegisterNetEvent("ps:clearMission")
 
 function drawTxt(x, y, width, height, scale, text, r, g, b, a, outline)
     SetTextFont(0)
@@ -112,17 +128,16 @@ function drawTxt(x, y, width, height, scale, text, r, g, b, a, outline)
     EndTextCommandDisplayText(x - width / 2, y - height / 2 + 0.005)
 end
 
+RegisterNetEvent("ps:cleanupVault")
 AddEventHandler("ps:cleanupVault", function(id)
         -- close the vault
         local v = terminals[id]
         
         local prop = GetClosestObjectOfType(v.x, v.y, v.z, 50.0, GetHashKey("v_ilev_gb_vauldr"), false, false, false)
         SetEntityHeading(prop, 250.0)
-        
-        
-        terminals[id].inProgress = false
 end)
 
+RegisterNetEvent("ps:startTimer")
 AddEventHandler("ps:startTimer", function()
     local timer = Config.WaitTime
     
@@ -166,8 +181,6 @@ Citizen.CreateThread(function()
     
     AddEventHandler("paradise_hack_bruteforce_result", function(result)
         if (not result) then return end
-        
-        --setmissiontext(_U("drill_mission"), 150)
         TriggerServerEvent("ps:hackingFinished")
     end)
     
@@ -191,19 +204,10 @@ Citizen.CreateThread(function()
     end)
 end)
 
-function setmissiontext(text, time)
-    ClearPrints()
-    SetTextEntry_2("STRING")
-    AddTextComponentString(text)
-    DrawSubtitleTimed(time, 1)
-end
-
+RegisterNetEvent("ps:clearMission")
 AddEventHandler("ps:clearMission", function()
-    clearmissiontext()
-end)
-function clearmissiontext()
     ClearPrints()
-end
+end)
 
 
 Citizen.CreateThread(function()
@@ -220,7 +224,6 @@ Citizen.CreateThread(function()
         if (Vdist(playerPos.x, playerPos.y, playerPos.z, terminal.x, terminal.y, terminal.z) > Config.MaxDistance) then
             TriggerServerEvent("ps:toofar", id)
         end
-    
     end
 end)
 
@@ -229,7 +232,6 @@ Citizen.CreateThread(function()
     RegisterNetEvent("ps_fleecavaultopen")
     AddEventHandler("ps_fleecavaultopen", function(prop)
         Citizen.Wait(800)
-        
         
         local count = 0
         repeat

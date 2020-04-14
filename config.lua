@@ -4,7 +4,7 @@ Config = {}
 -- Available languages: English "en"
 --                      Czech: "cs"
 
-Config.Locale = "cs"
+Config.Locale = "zh"
 
 -- Min police online needed
 Config.OnlinePoliceNeeded = 0
@@ -28,12 +28,15 @@ Config.MaxDistance = 30
 -- Cleanup time (in seconds) - after when to close the vault after heist? (acts as a cooldown before heists too)
 Config.CleanupTime = 200
 
+-- Server cooldown after completion
+Config.cooldown = 300
+
 -- The locations
 Config.Terminals = {
-    [1] = {name="Bankovní loupež", id=255, x=146.938, y=-1046.161, z=29.368, inProgress = false, ply = nil},
-    [2] = {name="Bankovní loupež", id=255, x=-353.787, y=-55.299, z=49.036, inProgress= false, ply = nil},
-    [3] = {name="Bankovní loupež", id=255, x=-1210.808, y=-336.565, z=37.781, inProgress= false, ply = nil},
-    [4] = {name="Bankovní loupež", id=255, x=311.355, y=-284.483, z=54.164, inProgress= false, ply = nil},
+    [1] = {name="銀行搶劫", id=255, x=146.938, y=-1046.161, z=29.368, inProgress = false, ply = nil},
+    [2] = {name="銀行搶劫", id=255, x=-353.787, y=-55.299, z=49.036, inProgress= false, ply = nil},
+    [3] = {name="銀行搶劫", id=255, x=-1210.808, y=-336.565, z=37.781, inProgress= false, ply = nil},
+    [4] = {name="銀行搶劫", id=255, x=311.355, y=-284.483, z=54.164, inProgress= false, ply = nil},
 }
 
 Config.DrillPositions = {
