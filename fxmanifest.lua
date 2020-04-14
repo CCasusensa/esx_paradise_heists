@@ -2,7 +2,7 @@ fx_version 'adamant'
 
 game 'gta5'
 
-description 'Paradise Heists'
+description 'Paradise Heists by lrenex(modify)'
 
 version '1.0.1'
 
@@ -30,9 +30,4 @@ server_scripts {
 	'locales/en.lua',
 	'locales/cs.lua',
 	'locales/zh.lua'
-}
-
-dependencies {
-	'es_extended',
-	'async'
 }
