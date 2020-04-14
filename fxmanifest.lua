@@ -4,7 +4,7 @@ game 'gta5'
 
 description 'Paradise Heists'
 
-version '1.0.0'
+version '1.0.1'
 
 
 client_scripts {
@@ -18,6 +18,7 @@ client_scripts {
 
 	'locales/en.lua',
 	'locales/cs.lua',
+	'locales/zh.lua'
 }
 
 server_scripts {
@@ -28,6 +29,7 @@ server_scripts {
 
 	'locales/en.lua',
 	'locales/cs.lua',
+	'locales/zh.lua'
 }
 
 dependencies {
