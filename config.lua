@@ -12,9 +12,6 @@ Config.OnlinePoliceNeeded = 0
 -- Wait time (how long do you need to wait before the vault opens in seconds?) [after hacking]
 Config.WaitTime = 120
 
--- Hacking phrase (the phrase in the hacking program) HAS TO BE 8 LETTERS!!!!!!
-Config.HackPhrase = "PARADISE"
-
 -- Payout type ('cash' or 'black') - cash or black money
 Config.MoneyType = 'black'
 
@@ -26,7 +23,7 @@ Config.PayoutRangeMax = 30000
 Config.MaxDistance = 30
 
 -- Cleanup time (in seconds) - after when to close the vault after heist? (acts as a cooldown before heists too)
-Config.CleanupTime = 200
+Config.CleanupTime = 30
 
 -- Server cooldown after completion
 Config.cooldown = 300

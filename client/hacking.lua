@@ -77,37 +77,14 @@ Citizen.CreateThread(function ()
         PushScaleformMovieFunctionParameterInt(7)
         PushScaleformMovieFunctionParameterInt(255)
         PopScaleformMovieFunctionVoid()
-
 		return scaleform
-
     end
-    
-    RegisterNetEvent("paradise_hack_bruteforce")
-    
-    AddEventHandler("paradise_hack_bruteforce", function (livesC, gamePassword)
-        scaleform = drawscaleform("HACKING_PC")
-        gamePassword = gamePassword or "PARADISE"
-        lives = tonumber(livesC) or 5
-
-        
-    end)
-
-    
-    
-
-    
-    
-    AddEventHandler("paradise_hack_bruteforce_cancel", function ()
-        scaleform = nil
-    end)
-
 end)
 
 Citizen.CreateThread(function ()
     while true do
         Citizen.Wait(0)
         if scaleform ~= nil then
-            
             DrawScaleformMovieFullscreen(scaleform, 255, 255, 255, 255, 0)
             PushScaleformMovieFunction(scaleform, "SET_CURSOR") --We use this scaleform function to define what input is going to move the cursor
             PushScaleformMovieFunctionParameterFloat(GetControlNormal(0, 239)) 
@@ -275,3 +252,24 @@ Citizen.CreateThread(function()
     end
 end)
 
+RegisterNetEvent("paradise_hack_bruteforce")
+AddEventHandler("paradise_hack_bruteforce", function (livesC)
+    scaleform = drawscaleform("HACKING_PC")
+    gamePassword = makeRandomPassowrd(8)
+    lives = tonumber(livesC) or 5
+end)
+
+AddEventHandler("paradise_hack_bruteforce_cancel", function ()
+    scaleform = nil
+end)
+
+function makeRandomPassowrd(strlen)
+    if strlen < 1 then return nil end
+    local s = ""
+    for i = 1, strlen do
+        n = math.random(65, 90)
+        if n == 96 then n = math.random(32, 95) end
+            s = s .. string.char(n)
+    end
+    return s
+end

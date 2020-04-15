@@ -108,7 +108,6 @@ AddEventHandler("ps:stopprogess", function()
     if terminals[id2].inProgress then
         terminals[id2].inProgress = false
     end
-    showTip = true
 end)
 
 RegisterNetEvent('ps:canHackResult')
@@ -122,7 +121,6 @@ function drawTxt(x, y, width, height, scale, text, r, g, b, a, outline)
     SetTextDropshadow(0, 0, 0, 0, 255)
     SetTextDropShadow()
     if outline then SetTextOutline() end
-    
     BeginTextCommandDisplayText('STRING')
     AddTextComponentSubstringPlayerName(text)
     EndTextCommandDisplayText(x - width / 2, y - height / 2 + 0.005)
@@ -132,9 +130,9 @@ RegisterNetEvent("ps:cleanupVault")
 AddEventHandler("ps:cleanupVault", function(id)
         -- close the vault
         local v = terminals[id]
-        
         local prop = GetClosestObjectOfType(v.x, v.y, v.z, 50.0, GetHashKey("v_ilev_gb_vauldr"), false, false, false)
         SetEntityHeading(prop, 250.0)
+        showTip = true
 end)
 
 RegisterNetEvent("ps:startTimer")
@@ -175,7 +173,7 @@ Citizen.CreateThread(function()
             return
         end
         
-        TriggerEvent("paradise_hack_bruteforce", 3, Config.HackPhrase)
+        TriggerEvent("paradise_hack_bruteforce", 3)
     
     end)
     

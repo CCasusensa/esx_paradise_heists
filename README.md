@@ -5,7 +5,7 @@ EN
 Fleeca Bank heists
 
 Showcase:
-https://streamable.com/qvc26
+https://streamable.com/y5608w
 
 Download:
 https://github.com/CCasusensa/esx_paradise_heists/archive/master.zip
