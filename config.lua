@@ -42,3 +42,11 @@ Config.DrillPositions = {
     [3] = {x = -1206.625, y=-338.262, z=36.759, heading=209.417},
     [4] = {x = 313.395, y=-288.82, z=53.143, heading=167.658},
 }
+
+-- job blacklist
+Config.jobBlacklist = {
+    "police",
+    "ambulance",
+    "offpolice",
+    "offambulance"
+}

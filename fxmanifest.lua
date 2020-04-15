@@ -4,7 +4,7 @@ game 'gta5'
 
 description 'Paradise Heists by lrenex(modify)'
 
-version '1.1.0'
+version '1.1.1'
 
 
 client_scripts {

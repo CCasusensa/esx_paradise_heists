@@ -21,6 +21,7 @@ Features:
 - Police notifications
 - ServerCooldown
 - fixed bugs
+- joblimit
 
 Needed addons:
 - ESX

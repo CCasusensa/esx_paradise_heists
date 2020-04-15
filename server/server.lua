@@ -141,6 +141,18 @@ ESX.RegisterServerCallback("esx_paradise:iscollectPossible", function(source, cb
     end
 end)
 
+ESX.RegisterServerCallback("esx_paradise:checkJob", function(source, cb)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    for i in pairs(Config.jobBlacklist) do
+        if xPlayer.getJob().name == Config.jobBlacklist[i] then
+            cb(false)
+            break
+        end
+    end
+    cb(true)
+end)
+
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(1000)

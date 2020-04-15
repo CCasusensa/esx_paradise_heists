@@ -62,15 +62,20 @@ Citizen.CreateThread(function()
         local b, pos, id = nearInteractionEntity(terminals, 1)
         if b and not terminals[id].inProgress then --terminals[id].inProgress
             DisplayHelpText(_U("rob_button"))
-            
             if IsControlJustPressed(1, 38) then
-                ESX.TriggerServerCallback("esx_paradise:iscollectPossible", function(cooldown)
-                    if not cooldown then
-                        if IsPedArmed(ped, 4) then
-                            TriggerServerEvent('ps:canHack', id)
-                        else
-                            ESX.ShowNotification(_U('no_threat'))
-                        end
+                ESX.TriggerServerCallback("esx_paradise:checkJob", function(feasible)
+                    if feasible then
+                        ESX.TriggerServerCallback("esx_paradise:iscollectPossible", function(cooldown)
+                            if not cooldown then
+                                if IsPedArmed(ped, 4) then
+                                    TriggerServerEvent('ps:canHack', id)
+                                else
+                                    ESX.ShowNotification(_U('no_threat'))
+                                end
+                            end
+                        end)
+                    else
+                        ESX.ShowNotification(_U('no_job'))
                     end
                 end)
             end
